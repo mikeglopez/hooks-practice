@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [list, addToList] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addToList([...list, document.getElementById('listItem').value]);
+  }
+
+  useEffect(() => {
+    document.title = `Shopping List: ${list.length}`;
+    console.log(list);
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>My Shopping List: {list.length} Items</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="text" id="listItem" /> <input type="submit" value="Add" id="submit" />
+      </form>
+      {list.map((item, index) => {
+        return <p key={index}>{item}</p>
+      })}
     </div>
   );
 }
