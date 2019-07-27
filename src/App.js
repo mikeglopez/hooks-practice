@@ -1,30 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 
-function App() {
-  const [list, addToList] = useState([]);
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      list: []
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addToList([...list, document.getElementById('listItem').value]);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  useEffect(() => {
-    document.title = `Shopping List: ${list.length}`;
-    console.log(list);
-  });
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState({list: [...this.state.list, document.getElementById('listItem').value]});
+  }
 
-  return (
-    <div className="App">
-      <h1>My Shopping List: {list.length} Items</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" id="listItem" /> <input type="submit" value="Add" id="submit" />
-      </form>
-      {list.map((item, index) => {
-        return <p key={index}>{item}</p>
-      })}
-    </div>
-  );
+  componentDidMount() {
+    document.title = `Shopping List: ${this.state.list.length}`;
+  }
+
+  render () {
+    return (
+      <div className="App">
+        <h1>My Shopping List: {this.state.list.length} Items</h1>
+        <form onSubmit={this.handleSubmit}>
+          <input type="text" id="listItem" /> <input type="submit" value="Add" id="submit" />
+        </form>
+        {this.state.list.map((item, index) => {
+          return <p key={index}>{item}</p>
+        })}
+      </div>
+    );
+  }
 }
 
 export default App;
+
+
+
+
