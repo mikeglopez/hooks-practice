@@ -11,7 +11,6 @@ function App() {
 
   useEffect(() => {
     document.title = `Shopping List: ${list.length}`;
-    console.log(list);
   });
 
   return (
